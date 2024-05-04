@@ -33,7 +33,16 @@ function App() {
       console.error("Error adding note:", error);
     }
   };
-  const deleteClick = async () => {};
+  const deleteClick = async (id) => {
+    try {
+      await fetch(API_URL + `api/todoapp/DeleteNotes?id=${id}`, {
+        method: "DELETE",
+      });
+      refreshNotes();
+    } catch (error) {
+      console.error("Error delete note:", error);
+    }
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -47,7 +56,7 @@ function App() {
         {notes.map((note, index) => (
           <p key={index}>
             <b>*{note.description}</b>&nbsp;
-            <button onClick={deleteClick}>Delete</button>
+            <button onClick={() => deleteClick(note.id)}>Delete</button>
           </p>
         ))}
       </header>
