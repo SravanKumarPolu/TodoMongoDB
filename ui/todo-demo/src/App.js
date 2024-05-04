@@ -1,10 +1,10 @@
-import "./App.css";
 import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [newNote, setNewNote] = useState("");
   const API_URL = "http://localhost:5038/";
-
   useEffect(() => {
     refreshNotes();
   }, []);
@@ -18,42 +18,36 @@ function App() {
       console.error("Error fetching notes:", error);
     }
   };
-
   const addClick = async () => {
-    const newNoteDescription = document.getElementById("newNotes").value;
     try {
-      await fetch(API_URL + "api/todoapp/AddNote", {
+      await fetch(API_URL + "api/todoapp/AddNotes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ description: newNoteDescription }),
+        body: JSON.stringify({ newNotes: newNote }),
       });
       refreshNotes();
+      setNewNote("");
     } catch (error) {
       console.error("Error adding note:", error);
     }
   };
-  const deleteNote = async (id) => {
-    try {
-      await fetch(API_URL + `api/todoapp/DeleteNote/${id}`, {
-        method: "DELETE",
-      });
-      refreshNotes();
-    } catch (error) {
-      console.error("Error deleting note:", error);
-    }
-  };
+  const deleteClick = async () => {};
   return (
     <div className="App">
       <header className="App-header">
         <h1>ToDo App</h1>
-        <input id="newNotes" /> &nbsp;
-        <button onClick={() => addClick()}>Add Note</button>
+        <input
+          id="newNotes"
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+        />
+        <button onClick={addClick}>Add Note</button>
         {notes.map((note, index) => (
           <p key={index}>
             <b>*{note.description}</b>&nbsp;
-            <button onClick={() => deleteNote(note.id)}>Delete</button>
+            <button onClick={deleteClick}>Delete</button>
           </p>
         ))}
       </header>
