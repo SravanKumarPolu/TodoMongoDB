@@ -47,27 +47,28 @@ function App() {
     <div className=" bg-slate-500 min-h-screen pt-10 md:pt-20 lg:pt-32 xl:pt-40">
       <header className="flex flex-col gap-5 text-center text-yellow-50">
         <h1 className="   font-semibold text-2xl">ToDo App</h1>
-        <div className=" flex flex-row justify-center gap-4 align-middle">
+        <div className=" flex flex-col xs:flex-col md:flex-row px-10 items-center justify-center text-center gap-5">
           <input
             className=" w-[20rem] text-black xs:w-full px-2 sm:w-full md:w-[20rem] h-[2.5rem] rounded-sm shadow-md"
             id="newNotes"
             value={newNote}
+            placeholder="Enter your note"
             onChange={(e) => setNewNote(e.target.value)}
           />
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 shadow-sm"
+            className="bg-blue-500 w-[8rem] text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 shadow-sm"
             onClick={addClick}>
             Add Note
           </button>
         </div>
         <div className=" flex w-full flex-col gap-4 justify-center items-center">
           {notes.map((note, index) => (
-            <p key={index} className="">
-              <span className="flex flex-row px-10 items-center justify-center  text-center  gap-5">
-                <b className=" flex-wrap text-left  w-[20rem] ">
+            <p key={index}>
+              <span className="flex flex-col xs:flex-col md:flex-row px-10 items-center justify-center text-center gap-5">
+                <b className=" flex-wrap text-left h-10  w-[20rem] ">
                   {note.description}
                 </b>
-                &nbsp;
+
                 <button
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600  shadow-sm"
                   onClick={() => deleteClick(note.id)}>
